@@ -18,21 +18,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// ADMIN
-Route::controller(AdminController::class)->group(function () {
-    Route::get('/dashboard', 'index');
+Route::middleware(['auth'])->group(function () {
+    // ADMIN
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/dashboard', 'index');
+    });
+
+    // PENGURUS
+    Route::controller(PengurusController::class)->group(function () {
+        Route::get('/pengurus', 'index');
+    });
+
+    // MARKET
+    Route::controller(MarketController::class)->group(function () {
+        Route::get('/market', 'index');
+    });
+
+    Route::controller(SimpanPinjamController::class)->group(function () {
+        Route::get('/simpan-pinjam', 'index');
+    });
 });
 
-// PENGURUS
-Route::controller(PengurusController::class)->group(function () {
-    Route::get('/pengurus', 'index');
-});
-
-// MARKET
-Route::controller(MarketController::class)->group(function () {
-    Route::get('/market', 'index');
-});
-
-Route::controller(SimpanPinjamController::class)->group(function () {
-    Route::get('/simpan-pinjam', 'index');
-});
+require __DIR__ . '/auth.php';
